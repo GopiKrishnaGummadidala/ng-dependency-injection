@@ -18,8 +18,5 @@ export class AppComponent {
       this.logger.prefix = "App Component";
       this.logger.logMessage("constructor init");
     }
-    if (this.parentLogger) {
-      this.logger.logMessage("constructor init");
-    }
   }
 }
