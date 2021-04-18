@@ -1,4 +1,3 @@
-import { Component } from "@angular/core";
 class UserService {
   printMsg() {
     console.log("HI this is from UserService");
