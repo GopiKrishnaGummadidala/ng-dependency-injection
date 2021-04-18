@@ -4,9 +4,10 @@ import { Injectable } from "@angular/core";
   providedIn: "root",
 })
 export class LoggerService {
+  prefix = "root";
   constructor() {}
 
   logMessage(msg): void {
-    console.log(msg);
+    console.log(`${this.prefix} ${msg}`);
   }
 }

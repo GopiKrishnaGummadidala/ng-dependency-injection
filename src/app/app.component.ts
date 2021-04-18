@@ -12,6 +12,7 @@ export class AppComponent {
 
   constructor(@Self() private logger: LoggerService) {
     if (this.logger) {
+      this.logger.prefix = "App Component";
       this.logger.logMessage("constructor init");
     }
   }
