@@ -8,7 +8,6 @@ import { LoggerService } from "src/services/logger.service";
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, AppRoutingModule],
-  providers: [LoggerService],
   bootstrap: [AppComponent],
 })
 export class AppModule {
