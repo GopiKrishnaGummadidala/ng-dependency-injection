@@ -1,9 +1,10 @@
+import { ILogger } from "./ilogger";
 import { Injectable } from "@angular/core";
 
 @Injectable({
   providedIn: "root",
 })
-export class LoggerService {
+export class LoggerService implements ILogger {
   prefix = "root";
   constructor() {}
 

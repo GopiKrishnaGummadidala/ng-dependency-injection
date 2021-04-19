@@ -1,11 +1,14 @@
 import { LoggerService } from "./../../services/logger.service";
-import { Directive, Host } from "@angular/core";
+import { Directive, Host, Optional } from "@angular/core";
 
 @Directive({
   selector: "[appChild]",
 })
 export class ChildDirective {
-  constructor(@Host() private logger: LoggerService) {
-    this.logger.logMessage("directive contructor");
+  constructor(private logger: LoggerService) {
+    if (this.logger) {
+      this.logger.prefix = "Child Directive";
+      this.logger.logMessage("constructor init");
+    }
   }
 }
