@@ -6,15 +6,24 @@ import { ExperimentalLoggerService } from "src/services/experimental-logger.serv
   selector: "app-root",
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.scss"],
-  providers: [{ provide: LoggerService, useClass: ExperimentalLoggerService }],
+  providers: [
+    { provide: LoggerService, useExisting: ExperimentalLoggerService },
+  ],
 })
 export class AppComponent {
   title = "ng-dependency-injection";
 
-  constructor(@Self() private logger: LoggerService) {
+  constructor(
+    private logger: LoggerService,
+    private experimentallogger: ExperimentalLoggerService
+  ) {
     if (this.logger) {
       this.logger.prefix = "App Component";
       this.logger.logMessage("constructor init");
+      console.log(
+        "is same instance: ",
+        this.logger === this.experimentallogger
+      );
     }
   }
 }
