@@ -1,4 +1,3 @@
-import { AppConfig, APP_CONFIG } from "./../services/config-token";
 import { LoggerService } from "./../services/logger.service";
 import {
   Component,
@@ -10,12 +9,23 @@ import {
 } from "@angular/core";
 import { ExperimentalLoggerService } from "src/services/experimental-logger.service";
 import { legacyLogger } from "src/services/logger-legacy";
+import { AppConfig, APP_CONFIG } from "src/services/config-token";
 
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.scss"],
-  providers: [{ provide: LoggerService, useValue: legacyLogger }],
+  providers: [
+    {
+      provide: LoggerService,
+      useFactory: (config: AppConfig) => {
+        return config.experimentalEnabled
+          ? new ExperimentalLoggerService()
+          : new LoggerService();
+      },
+      deps: [APP_CONFIG],
+    },
+  ],
 })
 export class AppComponent {
   title = "ng-dependency-injection";
