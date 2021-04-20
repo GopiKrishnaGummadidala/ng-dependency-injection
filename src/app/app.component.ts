@@ -10,6 +10,7 @@ import {
 import { ExperimentalLoggerService } from "src/services/experimental-logger.service";
 import { legacyLogger } from "src/services/logger-legacy";
 import { AppConfig, APP_CONFIG } from "src/services/config-token";
+import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: "app-root",
@@ -18,12 +19,12 @@ import { AppConfig, APP_CONFIG } from "src/services/config-token";
   providers: [
     {
       provide: LoggerService,
-      useFactory: (config: AppConfig) => {
+      useFactory: (config: AppConfig, http: HttpClient) => {
         return config.experimentalEnabled
-          ? new ExperimentalLoggerService()
+          ? new ExperimentalLoggerService(http)
           : new LoggerService();
       },
-      deps: [APP_CONFIG],
+      deps: [APP_CONFIG, HttpClient],
     },
   ],
 })
