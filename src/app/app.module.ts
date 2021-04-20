@@ -11,7 +11,7 @@ import { APP_CONFIG } from "src/services/config-token";
 @NgModule({
   declarations: [AppComponent, ParentDirective, ChildDirective],
   imports: [BrowserModule, AppRoutingModule],
-  providers: [{ provide: APP_CONFIG, useValue: APP_CONFIG }],
+  // providers: [{ provide: APP_CONFIG, useValue: APP_CONFIG }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
