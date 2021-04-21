@@ -30,12 +30,6 @@ export function loggerFunction(
       provide: LoggerService,
       useFactory: loggerFunction,
       deps: [Injector],
-      multi: true,
-    },
-    {
-      provide: LoggerService,
-      useValue: legacyLogger,
-      multi: true,
     },
   ],
 })

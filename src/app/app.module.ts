@@ -1,3 +1,6 @@
+import { EngageReporterService } from "./engage-reporter.service";
+import { BrowserReporterService } from "./browser-reporter.service";
+import { REPORTERS } from "./reporter.token";
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule, Self } from "@angular/core";
 
@@ -13,7 +16,10 @@ import { HttpClientModule } from "@angular/common/http";
 @NgModule({
   declarations: [AppComponent, ParentDirective, ChildDirective],
   imports: [BrowserModule, CommonModule, AppRoutingModule, HttpClientModule],
-  // providers: [{ provide: APP_CONFIG, useValue: APP_CONFIG }],
+  providers: [
+    { provide: REPORTERS, useExisting: BrowserReporterService, multi: true },
+    { provide: REPORTERS, useExisting: EngageReporterService, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
