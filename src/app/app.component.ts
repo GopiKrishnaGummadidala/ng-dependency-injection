@@ -13,6 +13,14 @@ import { legacyLogger } from "src/services/logger-legacy";
 import { AppConfig } from "src/services/config-token";
 import { HttpClient } from "@angular/common/http";
 
+export function loggerFunction(
+  injector: Injector
+): ExperimentalLoggerService | LoggerService {
+  return injector.get(APP_CONFIG).experimentalEnabled
+    ? injector.get(ExperimentalLoggerService)
+    : injector.get(LoggerService);
+}
+
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
@@ -20,12 +28,14 @@ import { HttpClient } from "@angular/common/http";
   providers: [
     {
       provide: LoggerService,
-      useFactory: (injector: Injector) => {
-        return injector.get(APP_CONFIG).experimentalEnabled
-          ? injector.get(ExperimentalLoggerService)
-          : injector.get(LoggerService);
-      },
+      useFactory: loggerFunction,
       deps: [Injector],
+      multi: true,
+    },
+    {
+      provide: LoggerService,
+      useValue: legacyLogger,
+      multi: true,
     },
   ],
 })
@@ -38,13 +48,13 @@ export class AppComponent {
     @Inject(APP_CONFIG) private appConfig: AppConfig
   ) {
     if (this.logger) {
-      console.log("app config", this.appConfig);
-      this.logger.prefix = "App Component";
-      this.logger.logMessage("constructor init");
-      console.log(
-        "is same instance: ",
-        this.logger === this.experimentallogger
-      );
+      console.log("logger instance ", this.logger);
+      // this.logger.prefix = "App Component";
+      // this.logger.logMessage("constructor init");
+      // console.log(
+      //   "is same instance: ",
+      //   this.logger === this.experimentallogger
+      // );
     }
   }
 }
